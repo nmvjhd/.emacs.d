@@ -1,0 +1,133 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("d:/code/js/" . "emacsTest/")
+ ("d:/code/" . "js/")
+ ("e:/" . "360Cloud/")
+ ("e:/360Cloud/code/" . "lisp/")
+ ("d:/360Cloud/code/" . "js/")
+ ("d:/" . "code/")
+ ("d:/360Cloud/" . ".emacs.d/")
+ ("d:/360Cloud/.emacs.d/" . "lisp/")
+ ("d:/CloudData/.emacs.d/" . "lisp/")
+ ("d:/CloudData/" . "yu/")
+ ("e:/360Cloud/" . "code/")
+ ("e:/360Cloud/.emacs.d/" . "lisp/")
+ ("e:/360Cloud/installed/emacs/.emacs.d/" . "lisp/")
+ ("d:/360Cloud/installed/emacs/.emacs.d/" . "lisp/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "d:/360Cloud/.emacs.d/lisp/"
+ "d:/360Cloud/note/"
+ "d:/360Cloud/"
+ "d:/code/js/emacsTest/"
+ "d:/code/js/jsScheme/"
+ "d:/360Cloud/.emacs.d/"
+ "d:/360Cloud/code/js/"
+ "e:/360Cloud/note/"
+ "d:/360Cloud/code/lisp/"
+ "e:/360Cloud/code/lisp/"
+ "e:/360Cloud/.emacs.d/lisp/"
+ "e:/360Cloud/.emacs.d/elpa/"
+ "d:/360Cloud/.emacs.d/elpa/"
+ "d:/CloudData/note/"
+ "d:/CloudData/.emacs.d/lisp/"
+ "d:/CloudData/yu/"
+ "e:/360Cloud/.emacs.d/"
+ "e:/360Cloud/installed/emacs/.emacs.d/lisp/"
+ "e:/360Cloud/"
+ "d:/360Cloud/installed/emacs/.emacs.d/lisp/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "init-note.el"
+ "temp.txt"
+ "201306.txt"
+ "201605.txt"
+ "test.html"
+ "test.js"
+ "a.js"
+ "init-scheme.el"
+ "evalFile.js"
+ "init-javascript.el"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("d:/360Cloud/.emacs.d/" (22497 62715 0 0) "url/" "TAGS" "recentf" "lisp/" "init.el" "ido.last" "history" "eshell/" "elpa/" "auto-save-list/" ".session" "../" "./")
+
+ ("d:/360Cloud/" (22498 8220 0 0) "马腾飞2016年晋升申请材料.pptx" "马腾飞--技术定级自我简介表.docx" "行为记录.txt" "网络.txt" "测试.txt" "步行导航数据采集软件需求V1.1-高超.doc" "模板引擎mtpl.txt" "标反查原理.txt" "晋升答辩.pptx" "新建文件夹/" "搜索引擎.txt" "我的讲座概要.org" "建欣--web编辑器.txt" "安全.org" "如何实现一个解释器.pptx" "培训/" "向哲--高德数据制作流程.txt" "向哲--苹果地图.txt" "可视化.txt" "加班餐费报销明细表.xlsx" "代码审查.txt" "_viminfo" "week-reports.txt" "WebPack.txt" "vim.org" "test.js" "test.html" "software/" "SOCOL.txt" "SICP.txt" "RestAPI讲座.txt" "ReactJS.text" "r2.rkt" "pic/" "note2/" "note.zip" "note/" "MVCObject.txt" "MongoDB.org" "link/" "JPA.txt" "installed/" "id_rsa_putty.ppk" "id_rsa" "good-book.txt" "cookieSession.txt" "code/" "ClassLoader.pptx" "book/" "aaa.zip" ".swp" ".ssh/" ".slime/" ".lesshst" ".gitconfig" ".emacs.d.zip" ".emacs.d/" ".config/" ".bash_history" ".#test.js" ".#cookieSession.txt" "#test.js#" "#cookieSession.txt#" "../" "./")
+
+ ("d:/360Cloud/note/" (22498 19303 0 0) "temp.txt" "other.txt" "images/" "201609.txt" "201608.txt" "201607.txt" "201606.txt" "201605.txt" "201604.txt" "201603.txt" "201601.txt" "201512.txt" "201511.txt" "201510.txt" "201509.txt" "201508.txt" "201507.txt" "201506.txt" "201505.txt" "201504.txt" "201503.txt" "201502.txt" "201501.txt" "201412.txt" "201411.txt" "201410.txt" "201409.txt" "201408.txt" "201407.txt" "201406.txt" "201405.txt" "201404.txt" "201403.txt" "201306.txt" ".gitignore" ".git/" "../" "./")
+
+ ("c:/Users/tengfei.ma/" (22445 32037 0 0) "「开始」菜单/" "Videos/" "Templates/" "SendTo/" "Searches/" "Saved Games/" "Recent/" "PrintHood/" "Pictures/" "null" "ntuser.pol" "ntuser.ini" "NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms" "NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms" "NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf" "ntuser.dat.LOG2" "ntuser.dat.LOG1" "NTUSER.DAT" "NetHood/" "My Documents/" "Music/" "Local Settings/" "Links/" "Favorites/" "Downloads/" "Documents/" "Desktop/" "Cookies/" "Contacts/" "Application Data/" "AppData/" ".WebStorm10/" ".node_repl_history" ".electron/" ".android/" "../" "./")
+
+ ("d:/code/js/jsScheme/" (22407 10318 0 0) "test/" "README.md" "package.json" "node_modules/" "jsScheme.js" "index.html" "evalLoop.js" "evalFile.js" ".idea/" ".gitignore" ".git/" "../" "./")
+
+ ("d:/360Cloud/.emacs.d/lisp/" (22400 37452 0 0) "test.el" "init-tabbar.el" "init-scheme.el" "init-note.el" "init-javascript.el" "init-config.el" "init-common.el" "hotkey.el" "2048.el" "../" "./")
+
+ ("c:/Users/" (22102 46584 0 0) "tengfei.ma/" "Public/" "desktop.ini" "Default User/" "Default/" "All Users/" "Administrator/" "../" "./")
+
+ ("d:/360Cloud/.emacs.d/elpa/" (22327 21239 0 0) "xref-js2-readme.txt" "xref-js2-20160421.203/" "xah-lookup.el" "xah-find.el" "websocket-20160510.2001/" "thumbs.el" "tabbar.el" "slime-readme.txt" "skewer-mode-20150914.1304/" "simple-httpd-20150430.1755/" "s-20160508.2357/" "rainbow-delimiters-20160430.2358/" "popup-20160409.2133/" "paredit.el" "nvm-20151113.55/" "nodejs-repl-readme.txt" "nodejs-repl-20151229.603/" "macrostep-20151213.145/" "kite-readme.txt" "jump-readme.txt" "json-snatcher-20150511.2047/" "json-reformat-20160212.53/" "json-mode-20151116.2000/" "js3-mode-readme.txt" "js2-refactor-readme.txt" "js2-mode-readme.txt" "js2-mode-20160510.1637/" "js2-mode-20151101.508/" "js-comint-20160220.350/" "graphviz-dot-mode-readme.txt" "graphviz-dot-mode-20151010.2359/" "gnupg/" "fullframe-20160504.749/" "f-20160426.527/" "emms-player-mpv-readme.txt" "dumb-jump-readme.txt" "dash-functional-20150828.413/" "dash-20160510.1127/" "coffee-mode-20160419.1947/" "archives/" "../" "./")
+
+ ("d:/code/js/emacsTest/" (22326 61442 0 0) "b.js" "a.js" "#a.js#" "../" "./")
+
+ ("d:/installed/" (22230 40072 0 0) "TortoiseSVN/" "php-5.3.3/" "pha-all/" "Git/" "../" "./")
+
+ ("d:/code/js/" (22326 58945 0 0) "webeditor/" "untitled2/" "untitled1/" "untitled/" "npts_5_cvg/" "npm-debug.log" "nodeFSTest/" "MapEditorDocument/" "MapEditor/" "libTest/" "jsScheme.js" "jsScheme/" "iD-master.zip" "iD-master/" "h5FileIOTest/" "emacsTest/" "d3-master.zip" "d3-master/" "../" "./")
+
+ ("d:/360Cloud/code/js/" (22314 61885 0 0) "readSExpToken.js" "currying.js" "ast.js" "../" "./")
+
+ ("d:/360Cloud/code/" (22314 61625 0 0) "js/" "../" "./")
+
+ ("d:/code/" (22230 38739 0 0) "SMMS/" "js/" "../" "./")
+
+ ("d:/360Cloud/code/lisp/" (22037 51982 0 0) "yin.wang/" "Y.rkt" "value.rkt" "value.bak" "tss.rkt" "tss.bak" "test.rkt" "test.bak" "temp.rkt" "table.lisp" "stream.rkt" "queens.rkt" "memo-fib.rkt" "ip2int.rkt" "ip2int.bak" "currying.lisp" "cps.rkt" "cps.bak" "continuation.rkt" "church.rkt" "calc.lisp" "btree.lisp" "biggest.lisp" "#continuation.rkt#" "#biggest.lisp#" "../" "./")
+
+ ("e:/360Cloud/note/" (22020 4356 0 0) "好书.txt" "week-reports.txt" "temp.txt" "other.txt" "201509.txt" "201508.txt" "201507.txt" "201506.txt" "201505.txt" "201504.txt" "201503.txt" "201502.txt" "201501.txt" "201412.txt" "201411.txt" "201410.txt" "201409.txt" "201408.txt" "201407.txt" "201406.txt" "201405.txt" "201404.txt" "201403.txt" "201306.txt" ".#201509.txt" "../" "./")
+
+ ("e:/360Cloud/code/lisp/" (22013 34290 0 0) "yin.wang/" "Y.rkt" "value.rkt" "value.bak" "tss.rkt" "tss.bak" "test.rkt" "test.bak" "temp.rkt" "stream.rkt" "queens.rkt" "memo-fib.rkt" "ip2int.rkt" "ip2int.bak" "currying.lisp" "cps.rkt" "cps.bak" "continuation.rkt" "church.rkt" "calc.lisp" "biggest.lisp" "#continuation.rkt#" "#biggest.lisp#" "../" "./")
+
+ ("e:/360Cloud/code/" (22013 27328 0 0) "矢量集成生产环境/" "xxx/" "WindowsFormsApplication2/" "WindowsFormsApplication1/" "TrzDecryptionTool/" "TrpDecryption/" "Test/" "SVPOI/" "StreetViewDataConvertTool/" "mylisp/" "minilisp/" "MiltiCodeTest/" "MD5Test/" "lisp/" "lib/" "LB5Test/" "LB5ReadWriteTest/" "IndoorReaper/" "DotSpatial.Plugins.ProjectTemplate1/" "DelegateTest/" "DataDistrubuteSystem/" "ConsoleApplication1/" "COM/" "Chinese2Pingyin/" "AutomaticExecutePlatform/" "anPreProcessClient/" "3DesCrypt/" "201407/" "../" "./")
+
+ ("e:/360Cloud/.emacs.d/" (22017 60657 0 0) "url/" "TAGS" "lisp/" "init.el" "init(冲突时的文件备份2015-09-21 22-32-42).el" "ido.last" "ido(冲突时的文件备份2015-09-23 08-06-06).last" "elpa/" "auto-save-list/" "../" "./")
+
+ ("e:/360Cloud/" (22017 60656 0 0) "文件同步工具设计.txt" "图片/" "[MobileBackup]/" "yu/" "week-reports.txt" "temp.rkt" "SystemStartupScript.ahk" "software/" "removetempfiles.py" "note/" "media/" "link/" "installed/" "documents/" "desktop.ini" "code/" "book/" ".minttyrc" ".idlerc/" ".emacs.img/" ".emacs.d/" ".bash_history" ".360cache/" "../" "./")
+
+ ("e:/360Cloud/.emacs.d/lisp/" (22012 13549 0 0) "test.el" "init-scheme.el" "init-note.el" "init-config.el" "init-common.el" "hotkey.el" "2048.el" "../" "./")
+
+ ("e:/360Cloud/.emacs.d/elpa/" (22009 31061 0 0) "xah-lookup.el" "xah-find.el" "thumbs.el" "tabbar.el" "paredit.el" "emms-player-mpv-readme.txt" "archives/" "../" "./")
+
+ ("d:/$RECYCLE.BIN/" (21999 39296 0 0) "S-1-5-21-3435627970-3614249024-3910756719-32403/" "S-1-5-21-1606412607-2823166860-655400095-500/" "S-1-5-18/" "../" "./")
+
+ ("d:/CloudData/note/" (21989 207 0 0) "好书.txt" "temp.txt" "temp(冲突_MININT-B5Q5MUN_2015-08-31 10-49-40).txt" "other.txt" "201508.txt" "201508(冲突_MININT-B5Q5MUN_2015-08-31 15-53-12).txt" "201507.txt" "201507(冲突_MININT-B5Q5MUN_2015-07-24 11-25-46).txt" "201506.txt" "201505.txt" "201504.txt" "201503.txt" "201502.txt" "201501.txt" "201412.txt" "201411.txt" "201410.txt" "201409.txt" "201408.txt" "201407.txt" "201406.txt" "201405.txt" "201404.txt" "201403.txt" "201306.txt" ".#201509.txt" "../" "./")
+
+ ("d:/CloudData/.emacs.d/lisp/" (21987 52367 0 0) "init-scheme.el" "init-note.el" "init-config.el" "init-common.el" "hotkey.el" "2048.el" "../" "./")
+
+ ("d:/CloudData/.emacs.d/" (21983 57639 0 0) "TAGS" "lisp/" "init.el" "ido.last" "elpa/" "auto-save-list/" "../" "./")
+
+ ("d:/CloudData/yu/" (21913 59103 0 0) "马瑜3聊天记录/" "马瑜2聊天记录/" "诗.txt" "新建文件夹/" "QQ图片20150702084603.png" "QQ图片20150629222922.jpg" "QQ图片20150629222655.jpg" "QQ图片20150629120632.jpg" "QQ图片20150629120624.jpg" "QQ图片20150619223906.jpg" "QQ图片20150619223746.jpg" "QQ图片20150618204420.jpg" "QQ图片20150618204400.jpg" "QQ图片20150615222757.jpg" "QQ图片20150615222752.jpg" "QQ图片20150615222732.jpg" "QQ图片20150601210750.jpg" "QQ图片20150601210746.jpg" "QQ图片20150601210742.jpg" "QQ图片20150601210738.jpg" "QQ图片20150601210732.jpg" "QQ图片20150601210713.jpg" "psb.jpg" "httpitem.taobao.comitem.htmcpp=1&id=16188624748&sourceType=item&_navigation_params=%7B%22needdismiss%22%3A1%7D.png" "D93763BFE13FE7DEEB37567778CAE339.png" "8C1E7E2135A7AB1E0DB4FA59BCAB77DB.png" "3A3D1839F176D7BC69378B079B5605B3.png" "3346A9A8E7368A8B96D8091B3BE101CA.png" "2.txt" "../" "./")
+
+ ("d:/CloudData/" (21913 58854 0 0) "晋升申请材料(马腾飞).pptx" "文件同步工具设计.txt" "图片/" "全景激光外业采集.txt" "[MobileBackup]/" "yu/" "week-reports.txt" "thinking/" "temp.rkt" "temp.bak" "SystemStartupScript.ahk" "software/" "reports/" "removetempfiles.py" "note/" "media/" "link/" "installed/" "documents/" "Desktop.ini" "code/" "CD175A4/" "book/" ".slime-history.eld" ".minttyrc" ".klive/" ".emacs.d/" ".bash_history" "../" "./")
+
+ ("d:/360Cloud/360Cloud/note/" (21890 41369 0 0) "好书.txt" "temp.txt" "other.txt" "201506.txt" "201505.txt" "201504.txt" "201503.txt" "201502.txt" "201501.txt" "201412.txt" "201411.txt" "201410.txt" "201409.txt" "201408.txt" "201407.txt" "201406.txt" "201405.txt" "201404.txt" "201403.txt" "201306.txt" "../" "./")
+
+ ("e:/360Cloud/新建文件夹/" (21857 43794 0 0) "新建文本文档.txt" "../" "./")
+
+ ("e:/360Cloud/installed/emacs/.emacs.d/lisp/" (21540 2277 0 0) "thumbs.el" "tabbar.el" "hotkey.el~" "hotkey.el" "../" "./")
+
+ ("e:/360Cloud/installed/emacs/.emacs.d/" (21540 2280 0 0) "slime-2.9/" "lisp/" "init.el~" "init.el" "ido.last~" "ido.last" "eshell/" "elpa/" "clisp-2.49/" "auto-save-list/" "#init.el#" "../" "./")
+
+ ("c:/Users/i-matengfei/" (21539 49367 0 0) "「开始」菜单/" "VSWebCache/" "Videos/" "Tracing/" "Templates/" "SendTo/" "Searches/" "Saved Games/" "Recent/" "PrintHood/" "Pictures/" "ntuser.pol" "ntuser.ini" "NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms" "NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms" "NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf" "ntuser.dat.LOG2" "ntuser.dat.LOG1" "NTUSER.DAT" "NetHood/" "My Documents/" "Music/" "Lync 录制/" "Local Settings/" "Links/" "gmon.out" "Favorites/" "Downloads/" "Documents/" "Desktop/" "Cookies/" "Contacts/" "CMB/" "Application Data/" "AppData/" ".VirtualBox/" ".slime/" ".idlerc/" ".designer/" ".android/" "../" "./")
+
+ ("d:/360Cloud/installed/emacs/.emacs.d/lisp/" (21539 34889 0 0) "thumbs.el" "tabbar.el" "hotkey.el~" "hotkey.el" "../" "./")
+
+ ("d:/360Cloud/installed/emacs/.emacs.d/" (21539 34914 0 0) "slime-2.9/" "lisp/" "init.el~" "init.el" "ido.last~" "ido.last" "eshell/" "elpa/" "clisp-2.49/" "auto-save-list/" ".#init.el" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

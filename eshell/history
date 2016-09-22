@@ -1,0 +1,128 @@
+rkt
+chez
+enca
+iconv
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni/CollectionTools/Tools/IndoorReaperV1/MapManager
+clear
+
+ndk-build
+ndk-build
+clear
+
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni/CollectionTools/Tools/IndoorReaperV1/MapRender
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+claer
+clear
+
+ndk-build
+clear
+
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+ndk-build
+clear
+
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni/CollectionTools/Tools/IndoorReaperV1/MapManager
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+clear
+
+ndk-build
+cd C:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+cd c:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+ndk-build
+cd C:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+cd D:/code/ali/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+cd /d D:/code/WalkNaviTool/WalkNaviTool/jni
+cd D:/code/WalkNaviTool/WalkNaviTool/jni
+clear
+
+ndk-build
+ndk-build
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+cd D:/code/ali/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+clear
+
+ndk-build
+cd E:\360Cloud\installed\graphviz\bin
+cd E:/360Cloud/installed/graphviz/bin
+notepad++
+msys
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+ndk-build
+git pull origin master
+git stash
+git pull origin master
+git stash pop

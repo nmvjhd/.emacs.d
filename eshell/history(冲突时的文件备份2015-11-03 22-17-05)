@@ -1,0 +1,124 @@
+cd d:
+cd D:\360Cloud\code\IndoorReaper\ANSV\WalkNaviTool\jni
+ndk-build
+cd 360Cloud\code\IndoorReaper\ANSV\WalkNaviTool\jni
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+d:/code/ali/adt-bundle-windows/android-ndk-r9d/toolchains/arm-linux-androideabi-4.6/prebuilt/windows-x86_64/bin/../lib/gcc/arm-linux-androideabi/4.6/../../../../arm-linux-androideabi/bin/ld.exe: d:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool//obj/local/armeabi/objs-debug/indoormap/d_/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool//jni/CollectionTools/Tools/IndoorReaperV1/MapManager/FNMapManager.o: in function FNMapManager::Select(geos::geom::Polygon const*):D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool//jni/CollectionTools/Tools/IndoorReaperV1/MapManager/FNMapManager.cpp:64: error: undefined reference to 'FNShpProvider::Select(geos::geom::Polygon const*)'
+clear
+
+ndk-build
+d:/code/ali/adt-bundle-windows/android-ndk-r9d/toolchains/arm-linux-androideabi-4.6/prebuilt/windows-x86_64/bin/../lib/gcc/arm-linux-androideabi/4.6/../../../../arm-linux-androideabi/bin/ld.exe: d:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool//obj/local/armeabi/objs-debug/indoormap/d_/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool//jni/CollectionTools/Tools/IndoorReaperV1/MapManager/FNMapManager.o: in function FNMapManager::FNMapManager(char const*):D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool//jni/CollectionTools/Tools/IndoorReaperV1/MapManager/FNMapManager.cpp:4: error: undefined reference to 'FNShpProvider::FNShpProvider(char const*)'
+ndk-build
+clear
+
+ndk-build
+ndk-build
+CLEAR
+clear
+
+ndk-build
+ndk-build
+clear
+
+ndk-build
+dir
+dir
+dir
+insert-char ?a
+gcc
+gcc --version
+cd C:\Users\tengfei.ma\Desktop\testmakefile
+cd C:\\Users\\tengfei.ma\\Desktop\\testmakefile
+make
+make
+make
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/libs/armeabi
+nm libindoormap.so
+rkt
+chez
+enca
+iconv
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni/CollectionTools/Tools/IndoorReaperV1/MapManager
+clear
+
+ndk-build
+ndk-build
+clear
+
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni/CollectionTools/Tools/IndoorReaperV1/MapRender
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+claer
+clear
+
+ndk-build
+clear
+
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+clear
+
+ndk-build
+ndk-build
+clear
+
+ndk-build
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni/CollectionTools/Tools/IndoorReaperV1/MapManager
+cd D:/360Cloud/code/IndoorReaper/ANSV/WalkNaviTool/jni
+clear
+
+ndk-build
+cd C:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+cd c:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+ndk-build
+cd C:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+ndk-build
+ndk-build
+cd C:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+cd C:/Users/Administrator/Desktop/indoor/IndoorReaperV1/MapTool/jni
+ndk-build

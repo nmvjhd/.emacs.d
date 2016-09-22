@@ -1,0 +1,11 @@
+;;; Automatically generated on Sat May 14 15:21:38 2016
+;;; Invoked by tengfei.ma@ALI-091398N using 25.0.50.1
+(setq-default session-file-alist '(("~/.emacs.d/custom.el" 1 nil 1 nil nil 641 (overwrite-mode))))
+(setq-default file-name-history '("~/installed/emacs/share/emacs/25.0.50/lisp/subr.el" "~/.emacs.d/custom.el" "~/.emacs.d/org-clock-save.el"))
+(setq-default command-history '((describe-function (quote remove-if-not)) (describe-function (quote first)) (describe-function (quote after-load))))
+(setq-default minibuffer-history '("remove-if-not" "first" "after-load"))
+(setq-default occur-collect-regexp-history '("\\1"))
+(setq-default serial-name-history '("COM1"))
+(setq-default serial-speed-history '("9600" "1200" "2400" "4800" "14400" "19200" "28800" "38400" "57600" "115200"))
+(setq-default slime-connect-host-history '("127.0.0.1"))
+(setq-default slime-connect-port-history '("4005"))
