@@ -12,8 +12,10 @@
     (insert-file-contents filePath)
     (buffer-string)))
 
-(defun write-string-to-file(str filePath)
+(defun write-string-to-file(str fileName)
   (if (stringp str)
-      (write-region str nil filePath 0)))
+      (progn
+		(delete-file fileName)
+		(write-region str nil fileName 0))))
 	
 (provide 'init-common)
