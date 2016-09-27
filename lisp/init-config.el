@@ -9,16 +9,12 @@
     (set-fontset-font "fontset-default" 'gb18030' ("Microsoft YaHei" . "unicode-bmp")))
 
 ;;设置编码
-(set-language-environment "UTF-8")
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-clipboard-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(modify-coding-system-alist 'process "*" 'utf-8)
+;保存文件（写）时默认使用utf-8编码
+;(setq default-buffer-file-coding-system 'utf-8)
+;新建与读取文件默认使用utf-8编码（失败时会从priority队列中继续匹配）
+(prefer-coding-system 'utf-8)
 ;优先使用utf-8解码，如果解码失败，尝试使用gbk解码
-(set-coding-system-priority 'chinese-iso-8bit)
-(set-coding-system-priority 'utf-8)
+(set-coding-system-priority 'utf-8 'chinese-iso-8bit)
 
 ;;显示行号
 (global-linum-mode t)
