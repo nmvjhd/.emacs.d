@@ -1,4 +1,4 @@
-﻿(dolist (path '("~/.emacs.d/lisp/"
+(dolist (path '("~/.emacs.d/lisp/"
 	     "~/.emacs.d/elpa"))
   (add-to-list 'load-path path))
 
@@ -72,3 +72,4 @@ occurence of CHAR."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
