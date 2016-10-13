@@ -1,3 +1,6 @@
+;;设置emacs初始目录为HOME所在位置
+(setq default-directory "~/")
+
 (dolist (path '("~/.emacs.d/lisp/"
 	     "~/.emacs.d/elpa"))
   (add-to-list 'load-path path))
