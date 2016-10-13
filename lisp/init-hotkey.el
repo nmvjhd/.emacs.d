@@ -29,4 +29,4 @@
  (move-line-up)
  (next-line))
 
-(provide 'hotkey)
+(provide 'init-hotkey)

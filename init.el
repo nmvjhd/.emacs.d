@@ -2,9 +2,6 @@
 	     "~/.emacs.d/elpa"))
   (add-to-list 'load-path path))
 
-;;essencial software config
-(require 'init-config)
-
 ;;package config
 (require 'package)
 (add-to-list 'package-archives
@@ -13,27 +10,23 @@
 (package-initialize)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; load download config
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; minibuffer输入提示插件
-(require 'ido)
-(ido-mode t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; load my config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'hotkey)
 (require 'init-common)
+(require 'init-config)
 (require 'init-tabbar)
 (require 'init-scheme)
 (require 'init-javascript)
 (require 'init-note)
+(require 'init-hotkey)
 (require 'test)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; load download config
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'xah-find)
 (require 'xah-lookup)
-
 (load-library "2048")
 
 
