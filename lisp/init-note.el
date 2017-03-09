@@ -7,7 +7,9 @@
 
 (add-hook 'org-mode-hook
 	  (lambda ()
-			(define-key org-mode-map (kbd "<f9>") 'insert-arrow)))
+		(define-key org-mode-map (kbd "<f9>") 'insert-arrow)))
+
+(setq org-todo-keywords '((type "TODO" "TIPS" "IMPORTANT" "|" "DONE")))
 
 (defun open-note()
   (interactive)
