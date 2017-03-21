@@ -27,6 +27,10 @@
 (if (equal system-type 'windows-nt)
     (set-fontset-font "fontset-default" 'gb18030' ("Microsoft YaHei" . "unicode-bmp")))
 
+;; 鼠标滚轮修改字体大小
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+
 ;; 编码设置
 ; 保存文件（写）时默认使用utf-8编码
 ; (setq default-buffer-file-coding-system 'utf-8)
