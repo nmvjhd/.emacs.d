@@ -32,7 +32,7 @@
 (require 'xah-lookup)
 (load-library "2048")
 
-
+;;(load-theme 'leuven t)
 (defun wy-go-to-char (n char)
   "Move forward to Nth occurence of CHAR.
 Typing `wy-go-to-char-key' again will move forwad to the next Nth
@@ -61,7 +61,9 @@ occurence of CHAR."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (nodejs-repl xref-js2 graphviz-dot-mode js2-mode))))
+ '(package-selected-packages
+   (quote
+	(leuven-theme nodejs-repl xref-js2 graphviz-dot-mode js2-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
