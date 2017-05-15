@@ -13,7 +13,7 @@
 (defun open-elisp-document()
        "open elisp.pdf using sumatrapdf"
        (interactive)
-       (let ((documentName (concat (getenv "HOME") "/book/01_技术/lisp/elisp.pdf")))
+       (let ((documentName (concat (getenv "HOME") "/book/programing/lisp/elisp.pdf")))
 	 (start-process "SumatraPDF" nil "~/installed/SumatraPDF/SumatraPDF.exe" documentName)))
 
 (defun move-line-up ()
