@@ -15,9 +15,8 @@
 
 (defun open-note()
   (interactive)
-  (let ((note-filename (concat "~/note/" (get-year-month-string) ".txt")))
+  (let ((note-filename (concat "~/note/" (get-year-month-string) ".note")))
     (find-file note-filename))
-  (note-mode)
   (if (month-change?)
       (insert-string (concat "* " (get-year-string) "/" (get-month-string) "\n")))
   (end-of-buffer))
