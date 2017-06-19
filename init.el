@@ -20,6 +20,7 @@
 (require 'init-tabbar)
 (require 'init-scheme)
 (require 'init-javascript)
+(require 'init-org)
 (require 'init-note)
 (require 'init-hotkey)
 (require 'test)
