@@ -1,7 +1,14 @@
 ;; my note mode
 
-
+;; (define-derived-mode note-mode org-mode "Note"
+;;   "a mode used to write note")
 (add-to-list 'auto-mode-alist '("\\.note\\'" . note-mode))
+;; (add-hook 'note-mode-hook (lambda()
+;; 							(define-key note-mode-map
+;; 							  [menu-bar org export2]
+;; 							  '("note2md" . note2md))
+;; 							))
+
 (setq org-todo-keywords '((type "TODO" "TIPS" "IMPORTANT" "|" "DONE")))
 (global-set-key (kbd "<f3>") 'open-note)
 
@@ -77,10 +84,9 @@
   (let ((short-day (nth 2 (split-string (current-time-string)))))
     (if (equal (length short-day) 1)
 	(concat "0" short-day)
-      short-day)))
+	short-day)))
 
 (define-derived-mode note-mode org-mode "Note"
-  "a mode used to write note"
-   )
+  "a mode used to write note")
 
 (provide 'note-mode)
