@@ -21,6 +21,7 @@
 (require 'init-scheme)
 (require 'init-javascript)
 (require 'init-org)
+(require 'init-markdown)
 (require 'init-note)
 (require 'init-hotkey)
 (require 'test)

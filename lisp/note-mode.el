@@ -15,7 +15,6 @@
 (defvar note-mode-map
   (let ((map (make-sparse-keymap)))
 	(define-key map (kbd "<f8>") 'insert-note)
-	(define-key map (kbd "<f9>") 'insert-arrow)
 	(define-key map (kbd "RET") 'newline)
 	;; (define-key map (kbd "<tab>") 'insert-tab)
 	map))
@@ -43,10 +42,6 @@
 			nil
 		  (insert-string "\n"))
 		(insert-string (concat "** " (get-year-month-day-string) "\n*** "))))))
-
-(defun insert-arrow()
-  (interactive)
-  (insert-string " --> "))
 
 (defun insert-tab()
   (interactive)

@@ -1,20 +1,10 @@
-(global-set-key (kbd "<f11>") 'org2md)
+(require 'iimage)
 
-(defun org2md()
-  "convert current org-mode format document to markdown format"
-  (interactive)
-  (let ((buffer-name (new-buffer-name buffer-file-name)))
-	(progn
-	 (call-process "pandoc" nil buffer-name nil "-f" "org" "-t" "markdown" buffer-file-name)
-	 (switch-to-buffer buffer-name))))
+(add-hook 'org-mode-hook '(lambda()
+               (define-key org-mode-map
+                 (kbd "<f12>") 'turn-on-iimage-mode)))
 
-(defun new-buffer-name(full-name)
-  (let ((short-name (buffer-short-name full-name)))
-	(replace-regexp-in-string "\\.\\w+\\|$" ".md" short-name)))
-
-(defun buffer-short-name (full-name)
-  (let ((path-list (split-string full-name "\/")))
-	(car (last path-list))))
+(setq iimage-mode-image-search-path '(list "." ".."))
 
 (provide 'init-org)
 
