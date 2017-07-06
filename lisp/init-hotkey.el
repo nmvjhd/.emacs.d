@@ -7,6 +7,9 @@
 (global-set-key (kbd "<f12>") 'open-elisp-document)
 (global-set-key [(meta up)] 'move-line-up)
 (global-set-key [(meta down)] 'move-line-down)
+;; 鼠标滚轮修改字体大小
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 
 (defun open-emacs-config()
 	"open emacs config file for user edit"

@@ -17,6 +17,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'init-common)
 (require 'init-config)
+(require 'init-fonts)
 (require 'init-tabbar)
 (require 'init-scheme)
 (require 'init-javascript)
@@ -47,11 +48,6 @@ occurence of CHAR."
   (setq unread-command-events (list last-input-event)))
 
 (define-key global-map (kbd "C-c a") 'wy-go-to-char)
-
-;;iimage
-;(add-hook 'org-mode-hook 'iimage-mode) ; enable iimage-mode for org-mode
-(autoload 'iimage-mode "iimage" "support inline image minor mode" t)
-(autoload 'turn-on-iimage-mode "iimage" "turn on inline image minor mode" t)
 
 (defun replace-line-slash()
   (interactive)
