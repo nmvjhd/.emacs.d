@@ -1,7 +1,10 @@
-(defvar org-mode-map
-  (let ((map (make-sparse-keymap)))
-	;; (define-key map (kbd "<f9>") 'insert-arrow)
-	map))
+(require 'iimage)
+
+(add-hook 'org-mode-hook '(lambda()
+               (define-key org-mode-map
+                 (kbd "<f12>") 'turn-on-iimage-mode)))
+
+(setq iimage-mode-image-search-path '(list "." ".."))
 
 (provide 'init-org)
 
