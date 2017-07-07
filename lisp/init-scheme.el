@@ -4,10 +4,9 @@
 
 (defalias 'first 'car)
 
-(global-set-key (kbd "<f4>") 'scheme-mode)
 (add-hook 'scheme-mode-hook
   (lambda ()
-    (paredit-mode 1)
+    (paredit-mode t)
     (define-key scheme-mode-map (kbd "<f5>") 'scheme-send-last-sexp-split-window)
     (define-key scheme-mode-map (kbd "<f6>") 'scheme-send-definition-split-window)))
 
