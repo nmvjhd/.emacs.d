@@ -15,11 +15,11 @@
                       charset
                       (font-spec :family "Microsoft Yahei" :size 14)))
 
-;; 保存文件（写）时默认使用utf-8编码
+;; ;; 保存文件（写）时默认使用utf-8编码
 ;; (setq default-buffer-file-coding-system 'utf-8)
-;; 新建与读取文件默认使用utf-8编码（失败时会从priority队列中继续匹配）
+;; ;; 新建与读取文件默认使用utf-8编码（失败时会从priority队列中继续匹配）
 ;; (prefer-coding-system 'utf-8)
-;; 优先使用utf-8解码，如果解码失败，尝试使用gbk解码
+;; ;; 优先使用utf-8解码，如果解码失败，尝试使用gbk解码
 ;; (set-coding-system-priority 'utf-8 'chinese-iso-8bit)
 
 ;;设置缩进(c++风格)
