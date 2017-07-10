@@ -58,7 +58,7 @@
   (let ((buffer-name (new-buffer-name buffer-file-name to-extension)))
 	(progn
 	  (if (has-buffer buffer-name) (kill-buffer buffer-name))
-	  (message (format "convert %s from %s to %s,new buffer name is %s" buffer-name from to buffer-file-name))
+	  (message (format "Convert %s from %s to %s. New buffer name is %s" buffer-name from to buffer-file-name))
 	 (call-process "pandoc" nil buffer-name nil "-f" from "-t" to buffer-file-name)
 	 (switch-to-buffer buffer-name))))
 
