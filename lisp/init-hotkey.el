@@ -1,21 +1,26 @@
 ;;hot key
 
-(global-set-key (kbd "<f1>") 'open-emacs-config)
-(global-set-key (kbd "<f9>") 'insert-arrow)
-(global-set-key (kbd "<f10>") 'eval-last-sexp)
-(global-set-key (kbd "<f11>") 'org2md)
-(global-set-key (kbd "<C-f11>") 'md2org)
-(global-set-key (kbd "<f12>") 'open-elisp-document)
-(global-set-key [(meta up)] 'move-line-up)
-(global-set-key [(meta down)] 'move-line-down)
-;; 鼠标滚轮修改字体大小
-(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+(global-set-key (kbd "<f1>") 'open-emacs-config) ; F1 打开init.el
+(global-set-key (kbd "<f4>") 'close-current-buffer)	; F4 关闭当前buffer
+(global-set-key (kbd "<f9>") 'insert-arrow)	; F9 插入箭头
+(global-set-key (kbd "<f10>") 'eval-last-sexp) ; F10 执行光标前的S表达式
+(global-set-key (kbd "<f11>") 'org2md)	; F11 org文档转换为markdown文档
+(global-set-key (kbd "<C-f11>") 'md2org) ; Ctrl+F11 markdown文档转换为org文档
+(global-set-key (kbd "<f12>") 'open-elisp-document)	; F12打开帮助文档
+(global-set-key [(meta up)] 'move-line-up) ; Alt+向上箭头 行上移
+(global-set-key [(meta down)] 'move-line-down) ; Alt+向下箭头 行下移
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase) ; 鼠标滚轮向上 放大字体
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) ; 鼠标滚轮向下 缩小字体
 
 (defun open-emacs-config()
 	"open emacs config file for user edit"
 	(interactive)
 	(find-file "~/.emacs.d/init.el"))
+
+(defun close-current-buffer()
+  "close current buffer"
+  (interactive)
+  (kill-buffer (current-buffer)))
 
 (defun open-elisp-document()
        "open elisp.pdf using sumatrapdf"
