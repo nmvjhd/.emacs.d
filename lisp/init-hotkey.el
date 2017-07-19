@@ -11,6 +11,7 @@
 (global-set-key [(meta down)] 'move-line-down) ; Alt+向下箭头 行下移
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase) ; 鼠标滚轮向上 放大字体
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) ; 鼠标滚轮向下 缩小字体
+(global-set-key (kbd "<f7>") 'one-key-push)	; F7 一键push
 
 (defun open-emacs-config()
 	"open emacs config file for user edit"
@@ -78,5 +79,16 @@
 (defun has-buffer (buffer-name)
   (let ((buf (get-buffer buffer-name)))
 	(not (eq nil buf))))
+
+(defun one-key-push ()
+  "you just need to press one key to add commit push everything"
+  (interactive)
+  (let ((output-buffer "*one-key-push-message*"))
+	(progn
+	  (call-process "git" nil output-buffer nil "status")
+	  (call-process "git" nil output-buffer nil "add" ".")
+	  (call-process "git" nil output-buffer nil "commit" "-m" "update")
+	  (call-process "git" nil output-buffer nil "push")
+	  (switch-to-buffer output-buffer))))
 
 (provide 'init-hotkey)
