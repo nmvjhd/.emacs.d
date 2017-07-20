@@ -87,7 +87,7 @@
 	(progn
 	  (call-process "git" nil output-buffer nil "status")
 	  (call-process "git" nil output-buffer nil "add" ".")
-	  (call-process "git" nil output-buffer nil "commit" "-m" "update")
+	  (call-process "git" nil output-buffer nil "commit" "-m" (read-from-minibuffer "commit message: "))
 	  (call-process "git" nil output-buffer nil "push")
 	  (switch-to-buffer output-buffer))))
 
