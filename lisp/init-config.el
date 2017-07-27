@@ -4,7 +4,7 @@
 (setf inhibit-startup-message t)
 (setf gnus-inhibit-startup-message t)
 ;; 菜单栏
-(if (display-graphic-p) (menu-bar-mode t))
+(if (display-graphic-p) (menu-bar-mode t) (menu-bar-mode 0))
 ;; 工具栏
 (tool-bar-mode 0)
 ;; 行号栏
