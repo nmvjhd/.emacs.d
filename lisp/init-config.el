@@ -1,3 +1,4 @@
+
 ;;emacs初始设置
 
 (setf inhibit-startup-message t)
