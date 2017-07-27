@@ -19,7 +19,7 @@
 (require 'init-common)
 (require 'init-config)
 (require 'init-fonts)
-(require 'init-tabbar)
+(if (display-graphic-p) (require 'init-tabbar))
 (require 'init-lisp)
 (require 'init-scheme)
 (require 'init-javascript)
