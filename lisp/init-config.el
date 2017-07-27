@@ -1,33 +1,33 @@
-;;emacs³õÊ¼ÉèÖÃ
+;;emacsåˆå§‹è®¾ç½®
 
 (setf inhibit-startup-message t)
 (setf gnus-inhibit-startup-message t)
-;; ²Ëµ¥À¸
+;; èœå•æ 
 (menu-bar-mode t)
-;; ¹¤¾ßÀ¸
+;; å·¥å…·æ 
 (tool-bar-mode 0)
-;; ĞĞºÅÀ¸
+;; è¡Œå·æ 
 (global-linum-mode t)
-;; ¹ö¶¯À¸
-(scroll-bar-mode t)
-;; µ×À¸
+;; æ»šåŠ¨æ 
+(if (display-graphic-p) (scroll-bar-mode t))
+;; åº•æ 
 (require 'ido)
 (ido-mode t)
 
-;; À¨ºÅ×Ô¶¯²¹È«
+;; æ‹¬å·è‡ªåŠ¨è¡¥å…¨
 (electric-pair-mode t)
-;; ×Ô¶¯¸ßÁÁÀ¨ºÅ
+;; è‡ªåŠ¨é«˜äº®æ‹¬å·
 (show-paren-mode t)
 
-;; Ê¹ÓÃibufferÏÔÊ¾buffer-list
+;; ä½¿ç”¨ibufferæ˜¾ç¤ºbuffer-list
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (setf make-backup-files nil)
 
-;;ÔÊĞíLexical Binding
+;;å…è®¸Lexical Binding
 ;;(setq lexical-binding t)
-;; (let ((y  4)) ;;Ê¹ÓÃlexical bindingÆäÖµÎª6£¬·ñÔòÎª8
+;; (let ((y  4)) ;;ä½¿ç”¨lexical bindingå…¶å€¼ä¸º6ï¼Œå¦åˆ™ä¸º8
 ;;   (funcall
 ;;    (let ((y 3))
 ;;        (lambda (x) (* y 2))) 

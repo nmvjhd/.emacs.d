@@ -9,11 +9,12 @@
 (set-face-attribute
   'default nil :font "Consolas 12")
  
-;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font)
-                      charset
-                      (font-spec :family "Microsoft Yahei" :size 14)))
+;; Chinese Font(if (window-system))
+(if (string= (window-system) "w32") 
+	(dolist (charset '(kana han symbol cjk-misc bopomofo))
+	  (set-fontset-font (frame-parameter nil 'font)
+						charset
+						(font-spec :family "Microsoft Yahei" :size 14))))
 
 ;; ;; 保存文件（写）时默认使用utf-8编码
 ;; (setq default-buffer-file-coding-system 'utf-8)
