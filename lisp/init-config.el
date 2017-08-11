@@ -12,8 +12,12 @@
 ;; 滚动栏
 (if (display-graphic-p) (scroll-bar-mode t))
 ;; 底栏
-(require 'ido)
-(ido-mode t)
+;; (require 'ido)
+;; (ido-mode t)
+(global-set-key (kbd "M-x") #'helm-M-x)
+(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+(helm-mode 1)
 
 ;; 括号自动补全
 (electric-pair-mode t)
