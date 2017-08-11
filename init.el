@@ -16,7 +16,7 @@
 ;; load my config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (server-start)							;打开emacs server
-(require 'init-common)
+(require 'init-tools)
 (require 'init-config)
 (require 'init-fonts)
 (if (display-graphic-p) (require 'init-tabbar))
@@ -63,7 +63,7 @@ occurence of CHAR."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(pandoc-mode markdown-mode+ markdown-mode auctex leuven-theme nodejs-repl xref-js2 graphviz-dot-mode js2-mode))))
+	(helm pandoc-mode markdown-mode+ markdown-mode auctex leuven-theme nodejs-repl xref-js2 graphviz-dot-mode js2-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
