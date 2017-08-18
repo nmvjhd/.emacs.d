@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t -*-
 (require 'iimage)
 
 (add-hook 'org-mode-hook '(lambda()
@@ -17,10 +16,10 @@
 
 ;;html导出设置
 
-(let ((temp-func 'org-html-template))
-  (defun org-html-template (contents info)
-	(let ((text (funcall temp-func contents info)))
-	  (concat "hahaha" text))))
+;; (let ((temp-func 'org-html-template))
+;;   (defun org-html-template (contents info)
+;; 	(let ((text (funcall temp-func contents info)))
+;; 	  (concat "hahaha" text))))
 
 (defun github-markdown-style ()
 	(concat "<style>\n"
