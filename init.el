@@ -34,8 +34,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'xah-find)
-(require 'xah-lookup)
+;; (require 'find-file-in-project) ; 由与projectile完成的更好已经不需要了
+(require 'projectile)
+(require 'helm-projectile)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(which-key-mode)
 (load-library "2048")
+
 
 ;;(load-theme 'leuven t)
 (defun wy-go-to-char (n char)
@@ -63,7 +70,7 @@ occurence of CHAR."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(helm pandoc-mode markdown-mode+ markdown-mode auctex leuven-theme nodejs-repl xref-js2 graphviz-dot-mode js2-mode))))
+	(which-key helm-projectile projectile neotree find-file-in-project helm pandoc-mode markdown-mode+ markdown-mode auctex leuven-theme nodejs-repl xref-js2 graphviz-dot-mode js2-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,70 +1,94 @@
-;;; xah-find.el --- find replace in pure emacs lisp. Purpose similar to unix grep/sed.
+;;; xah-find.el --- find replace in pure emacs lisp. Purpose similar to grep/sed. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2012-2015 by Xah Lee
+;; Copyright © 2012-2017 by Xah Lee
 
-;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.0.1
+;; Author: Xah Lee ( http://xahlee.info/ )
+;; Version: 3.1.20170820
 ;; Created: 02 April 2012
+;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: convenience, extensions, files, tools, unix
+;; License: GPL v3
+;; Homepage: http://ergoemacs.org/emacs/elisp-xah-find-text.html
 
 ;; This file is not part of GNU Emacs.
 
-;;; License:
-
-;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 2.
-
 ;;; Commentary:
 
-;; Provides emacs commands for find/replace. Similar to {grep, sed}, but entirely written emacs lisp.
+;; Provides emacs commands for find/replace text of files in a directory, written entirely in emacs lisp.
 
-;; This package provides the follow functions:
+;; This package provides these commands:
 
-;; xah-find-text                → like grep
-;; xah-find-text-regex          → like regex grep
-;; xah-find-count               → like grep count
-;; xah-find-replace-text        → like sed
-;; xah-find-replace-text-regex  → like sed
+;; xah-find-text
+;; xah-find-text-regex
+;; xah-find-count
+;; xah-find-replace-text
+;; xah-find-replace-text-regex
 
-;; This package is most useful when:
+;; • Pure emacs lisp. No dependencies on unix/linux grep/sed/find. Especially useful on Windows.
 
-;; • On Windows and don't have unix find/grep/sed utils installed.
+;; • Output is highlighted and clickable for jumping to occurrence.
 
-;; • Process lots Unicode chars. See  http://xahlee.info/comp/unix_uniq_unicode_bug.html and http://ergoemacs.org/emacs/emacs_grep_problem.html
+;; • Using emacs regex, not bash/perl etc regex.
 
-;; • Find/Replace string that contains newline chars.
+;; These commands treats find/replace string as sequence of chars, not as lines as in grep/sed, so it's easier to find or replace a text containing lots newlines, especially programming language source code.
 
-;; • You want to use emacs regex, not shell's regex.
+;; • Reliably Find/Replace string that contains newline chars.
 
-;; These commands treat a file as sequence of chars, not as lines as in sed, so it's much more easier to find or replace char sequences.
+;; • Reliably Find/Replace string that contains lots Unicode chars. See http://xahlee.info/comp/unix_uniq_unicode_bug.html and http://ergoemacs.org/emacs/emacs_grep_problem.html
 
-;; The printed report is also not based on lines. Instead, visual separator are used for easy reading.
+;; • Reliably Find/Replace string that contains lots escape slashes or backslashes. For example, regex in source code, Microsoft Windows' path.
 
-;; For each occurance or replacement, n chars will be printed before and after. The number of chars to show is defined by `xah-find-print-before' and `xah-find-print-after'
+;; The result output is also not based on lines. Instead, visual separators are used for easy reading.
 
-;; each “block of text” in output is one occurrence.
-;; for example, if a line in a file has 2 occurrences, then the same line will be reported twice, as 2 “blocks”.
+;; For each occurrence or replacement, n chars will be printed before and after. The number of chars to show is defined by `xah-find-context-char-count-before' and `xah-find-context-char-count-after'
+
+;; Each “block of text” in output is one occurrence.
+;; For example, if a line in a file has 2 occurrences, then the same line will be reported twice, as 2 “blocks”.
 ;; so, the number of blocks corresponds exactly to the number of occurrences.
 
-;; Ignore directories.
-;; Add the following in your init:
+;; Keys
+;; -----------------------
+;; TAB             xah-find-next-match
+;; <backtab>       xah-find-previous-match
+
+;; RET             xah-find--jump-to-place
+;; <mouse-1>       xah-find--mouse-jump-to-place
+
+;; <left>          xah-find-previous-match
+;; <right>         xah-find-next-match
+
+;; <down>          xah-find-next-file
+;; <up>            xah-find-previous-file
+
+;; M-n             xah-find-next-file
+;; M-p             xah-find-previous-file
+
+;; IGNORE DIRECTORIES
+
+;; By default, .git dir is ignored. You can add to it by adding the following in your init:
 
 ;; (setq
 ;;  xah-find-dir-ignore-regex-list
 ;;  [
 ;;   "\\.git/"
-;;    ; more path regex here
+;;    ; more regex here. regex is matched against file full path
 ;;   ])
 
-;; TODO:
-;; The output isn't beautiful. May be hard to read.
-;; File path in output isn't clickable. (use M-x `ffap' for now.)
-;; Highlighting is clunky (am using `highlight-lines-matching-regexp' instead of coding my own text properties)
+;; to customize the color for matched text, call `customize-group' and then give xah-find.
 
-;; I've been using this for 2 years, about every week, on linux (and Windows), on 5 thousand HTML files.
+;; USE CASE
 
-;; Do you find it useful? Help me make it better.
+;; To give a idea what file size, number of files, are practical, here's my typical use pattern:
+;; • 5 thousand HTML files match file name regex.
+;; • Each HTML file size are usually less than 200k bytes.
+;; • search string length have been up to 13 lines of text.
+
+;; Homepage: http://ergoemacs.org/emacs/elisp-xah-find-text.html
+
+;; Like it?
 ;; Buy Xah Emacs Tutorial
 ;; http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html
+;; Thank you.
 
 ;;; INSTALL
 
@@ -81,439 +105,588 @@
 
 ;;; HISTORY
 
-;; 2015-05-20 changes won't be logged here anymore, unless incompatible change.
-;; version 2.0.0, 2015-05-20 • major rewrite and rename. prepare for MELPA
-;; version 1.6.9, 2014-05-29 • turned on undo in output buffer
-;; version 1.6.8, 2013-07-05 • More options added to “xah-find-text”, “xah-find-text-regex”, “xah-find-replace-text”. Output format improved. Much code refactoring.
-;; version 1.6.7, 2013-06-17 • WARNING the argument for case search is reversed for xah-find-replace-text-regex. • added a case search option for xah-find-text-regex
-;; version 1.6.6, 2012-12-16 Now, the backup file's suffix is same for all backup files created during one command call. Before, each backup file has timestamp when the backup file is created, that is, their seconds will differ.
-;; version 1.6.5, 2012-12-08 improved the prompt for “xah-find-count” and also its output.
-;; version 1.6.4, 2012-12-06 Backup file name now has this format: 「~‹x›~‹datetimestamp›~」 where ‹x› is 「t」 for plain text replace and 「r」 for regex replace. e.g. 「x.html~r~20121206_095642~」 Also, modified the prompt for 「xah-find-replace-text-regex」 so it is consistent with the function's argument.
-;; version 1.6.3, 2012-11-30 fixed a bug: when one of the find or find/replace is called, and the temp output buffer already exits, the highlighting doesn't work. Now it does work.
-;; version 1.6.2, 2012-11-29 trival change. Changed output file names to consistently start with “•” instead of some “◆”
-;; version 1.6.1, 2012-11-20 improved the highlighting for xah-find-replace-text. It now highlighting the replaced text, instead of the find text.
-;; version 1.6, 2012-08-12 added xah-find-count.
-;; version 1.5, 2012-07-24 minor modification to the output format, made more consistent, added a utf-8 header.
-;; version 1.4, 2012-07-21 added prompt for a dir on “xah-find-text” and all others.
-;; version 1.3, 2012-07-19 added “xah-find-replace-text-regex”
-;; version 1.2, 2012-07-14 added “xah-find-replace-text”
-;; version 1.1, 2012-05-11 modified xah-find-text so that same line are not printed.
+;; version 2.1.0, 2015-05-30 Complete rewrite.
 ;; version 1.0, 2012-04-02 First version.
 
+;;; CONTRIBUTOR
+;; 2015-12-09 Peter Buckley (dx-pbuckley). defcustom for result highlight color.
+
 ;;; TODO:
-;; 2015-05-20 the feeble find-lisp-find-files is becoming a efficiency pain. It uses one regex to list all files, then you have to filter dir. And, there's no alternative except some “modern” API third-party shiny thing
+;; 2015-05-20 the feeble find-lisp-find-files is becoming a efficiency pain. It uses one regex to list all files, then you have to filter dir. There doesn't seem to be alternative except roll one's own or use third-party package
 
 
 ;;; Code:
 
 (require 'find-lisp) ; in emacs
-(require 'hi-lock) ; in emacs
+(require 'ido)       ; in emacs
+(ido-common-initialization) ; 2015-07-26 else, when ido-read-directory-name is called, Return key insert line return instead of submit. For some reason i dunno.
 
-(defcustom xah-find-print-before 100 "Number of characters to print before search string."
+(defcustom
+  xah-find-context-char-count-before
+  100
+  "Number of characters to print before search string."
   :group 'xah-find
   )
-(setq xah-find-print-before 100)
 
-(defcustom xah-find-print-after 30 "Number of characters to print after search string."
+(defcustom xah-find-context-char-count-after
+  50
+  "Number of characters to print after search string."
   :group 'xah-find
   )
-(setq xah-find-print-after 30)
 
-(defcustom xah-find-dir-ignore-regex-list nil "A list or vector of regex patterns, if match, that directory will be ignored. Case is dependent on current value of `case-fold-search'"
+(defcustom xah-find-dir-ignore-regex-list
+  [
+   "\\.git/"
+   ]
+  "A list or vector of regex patterns, if match, that directory will be ignored. Case is dependent on current value of `case-fold-search'"
   :group 'xah-find
   )
-(setq
- xah-find-dir-ignore-regex-list
- [
-  "\\.git/"
 
-  "xahlee_info/php-doc/"
-  "xahlee_info/node_api/"
-  "xahlee_info/java8_doc/"
-  "xahlee_info/css_transitions/"
-  "xahlee_info/css3_spec_bg/"
-  "xahlee_info/css_3_color_spec/"
-  "xahlee_info/REC-SVG11-20110816/"
-  "xahlee_info/python_doc_3.3.3/"
-  "xahlee_info/python_doc_2.7.6/"
-  "xahlee_info/jquery_doc/"
-  "xahlee_info/javascript_ecma-262_5.1_2011/"
-  "xahlee_info/git-bottomup/"
-  "xahlee_info/dom-whatwg/"
-  "xahlee_info/css_2.1_spec/"
-  "xahlee_info/clojure-doc-1.6/"
+(defcustom xah-find-file-separator
+  "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+  "A string as visual separator."
+  :group 'xah-find )
 
-  ])
+(defcustom
+  xah-find-occur-separator
+  "────────────────────────────────────────────────────────────\n"
+  "A string as visual separator."
+  :group 'xah-find )
 
-(defcustom xah-find-separator nil "A string that act as separator."
+(defface xah-find-file-path-highlight
+  '((t :foreground "black"
+       :background "pink"
+       ))
+  "Face of file path where a text match is found."
+  :group 'xah-find )
+
+(defface xah-find-match-highlight
+  '((t :foreground "black"
+       :background "yellow"
+       ))
+  "Face for matched text."
+  :group 'xah-find )
+
+(defface xah-find-replace-highlight
+  '((t :foreground "black"
+       :background "green"
+       ))
+  "Face for replaced text."
+  :group 'xah-find )
+
+(defcustom xah-find-occur-prefix
+"「"
+  "A left-bracket string that marks matched text and navigate previous/next."
   :group 'xah-find
   )
-(setq
- xah-find-separator
- "---88--------------------------------------------------\n")
+
+(defcustom xah-find-occur-postfix
+  "」"
+  "A right-bracket string that marks matched text and navigate previous/next."
+  :group 'xah-find
+  )
+
+;; brackets 「 」 〈 〉 《 》 【 】 〔 〕 ⦗ ⦘ 『 』 〖 〗 〘 〙
+;; more at
+;; http://xahlee.info/comp/unicode_matching_brackets.html
+
+(defcustom xah-find-filepath-prefix
+"❬"
+  "A left-bracket string used to mark file path and navigate previous/next."
+  :group 'xah-find
+  )
+
+(defcustom xah-find-filepath-postfix
+  "❭"
+  "A right-bracket string used to mark file path and navigate previous/next."
+  :group 'xah-find
+  )
 
 
 
-(defun xah-find--filter-list (φpredicate φsequence)
-  "Return a new list such that φpredicate is true on all members of φsequence.
+(defvar xah-find-file-path-regex-history '() "File path regex history list, used by `xah-find-text' and others.")
+
+(defun xah-find--filter-list (@predicate @sequence)
+  "Return a new list such that @PREDICATE is true on all members of @SEQUENCE.
+
 URL `http://ergoemacs.org/emacs/elisp_filter_list.html'
 Version 2015-05-23"
   (delete
    "e3824ad41f2ec1ed"
    (mapcar
-    (lambda (ξx)
-      (if (funcall φpredicate ξx)
-          ξx
+    (lambda ($x)
+      (if (funcall @predicate $x)
+          $x
         "e3824ad41f2ec1ed" ))
-    φsequence)))
+    @sequence)))
 
-(defun xah-find--ignore-dir-p (φpath)
-  "Return true if φpath should be ignored. Else, nil."
-  (catch 'catch25001
+(defun xah-find--ignore-dir-p (@path )
+  "Return true if one of `xah-find-dir-ignore-regex-list' matches @PATH. Else, nil.
+2016-11-16"
+  (catch 'exit25001
     (mapc
-     (lambda (x)
-       (when (string-match x φpath) (throw 'catch25001 x)))
+     (lambda ($regex)
+       (when (string-match $regex @path) (throw 'exit25001 $regex)))
      xah-find-dir-ignore-regex-list)
     nil
     ))
 
 
+(defvar xah-find-output-mode-map nil "Keybinding for `xah-find.el output'")
+(progn
+  (setq xah-find-output-mode-map (make-sparse-keymap))
 
-(defun xah-find--backup-suffix (φs)
-  "Return a string of the form 「~‹φs›~‹date time stamp›~」"
-  (concat "~" φs (format-time-string "%Y%m%d%H%M%S") "~"))
+  (define-key xah-find-output-mode-map (kbd "<left>") 'xah-find-previous-match)
+  (define-key xah-find-output-mode-map (kbd "<right>") 'xah-find-next-match)
+  (define-key xah-find-output-mode-map (kbd "<down>") 'xah-find-next-file)
+  (define-key xah-find-output-mode-map (kbd "<up>") 'xah-find-previous-file)
+
+  (define-key xah-find-output-mode-map (kbd "TAB") 'xah-find-next-match)
+  (define-key xah-find-output-mode-map (kbd "<backtab>") 'xah-find-previous-match)
+  (define-key xah-find-output-mode-map (kbd "<mouse-1>") 'xah-find--mouse-jump-to-place)
+  (define-key xah-find-output-mode-map (kbd "M-n") 'xah-find-next-file)
+  (define-key xah-find-output-mode-map (kbd "M-p") 'xah-find-previous-file)
+  (define-key xah-find-output-mode-map (kbd "RET") 'xah-find--jump-to-place)
+  )
+
+(define-derived-mode xah-find-output-mode fundamental-mode "∑xah-find"
+  "Major mode for reading output for xah-find commands.
+home page:
+URL `http://ergoemacs.org/emacs/elisp-xah-find-text.html'
+
+\\{xah-find-output-mode-map}"
+
+  (progn
+    (when (null buffer-display-table)
+      (setq buffer-display-table (make-display-table)))
+    (aset buffer-display-table ?\^L
+          (vconcat (make-list 70 (make-glyph-code ?─ 'font-lock-comment-face)))))
+
+  :group 'xah-find
+  )
+
+(defun xah-find-next-match ()
+  "Put cursor to next occurrence."
+  (interactive)
+  (search-forward xah-find-occur-prefix nil "NOERROR" ))
+
+(defun xah-find-previous-match ()
+  "Put cursor to previous occurrence."
+  (interactive)
+  (search-backward xah-find-occur-postfix nil "NOERROR" )
+  (left-char) ; todo. this is a hack. move point to inside of text with highlight property, so it's clickable. Look into modify xah-find--jump-to-place instead
+  )
+
+(defun xah-find-next-file ()
+  "Put cursor to next file."
+  (interactive)
+  (search-forward xah-find-filepath-prefix nil "NOERROR" ))
+
+(defun xah-find-previous-file ()
+  "Put cursor to previous file."
+  (interactive)
+  (search-backward xah-find-filepath-postfix nil "NOERROR" )
+  (left-char) ; todo. this is a hack. move point to inside of text with highlight property, so it's clickable. Look into modify xah-find--jump-to-place instead
+  )
+
+(defun xah-find--mouse-jump-to-place (@event)
+  "Open file and put cursor at location of the occurrence.
+Version 2016-12-18"
+  (interactive "e")
+  (let* (
+         ($pos (posn-point (event-end @event)))
+         ($fpath (get-text-property $pos 'xah-find-fpath))
+         ($pos-jump-to (get-text-property $pos 'xah-find-pos)))
+    (when (not (null $fpath))
+      (progn
+        (find-file-other-window $fpath)
+        (when $pos-jump-to (goto-char $pos-jump-to))))))
+
+(defun xah-find--jump-to-place ()
+  "Open file and put cursor at location of the occurrence.
+ 2017-04-07"
+  (interactive)
+  (let (($fpath (get-text-property (point) 'xah-find-fpath))
+        ($pos-jump-to (get-text-property (point) 'xah-find-pos)))
+    (when (not (null $fpath))
+      (if (file-exists-p $fpath)
+          (progn
+            (find-file-other-window $fpath)
+            (when $pos-jump-to (goto-char $pos-jump-to)))
+        (error "File at 「%s」 does not exist." $fpath)))))
+
+
+(defun xah-find--backup-suffix (@s)
+  "Return a string of the form 「~‹@s›~‹date time stamp›~」"
+  (concat "~" @s (format-time-string "%Y%m%dT%H%M%S") "~"))
 
 (defun xah-find--current-date-time-string ()
-  "Returns current date-time string in full ISO 8601 format.
-Example: 「2012-04-05T21:08:24-07:00」.
-
-Note, for the time zone offset, both the formats 「hhmm」 and 「hh:mm」 are valid ISO 8601. However, Atom Webfeed spec seems to require 「hh:mm」."
+  "Return current date-time string in this format 「2012-04-05T21:08:24-07:00」"
   (concat
    (format-time-string "%Y-%m-%dT%T")
-   ((lambda (ξx) (format "%s:%s" (substring ξx 0 3) (substring ξx 3 5))) (format-time-string "%z"))))
+   (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z"))))
 
-(defun xah-find--print-header (φinput-dir φpath-regex φsearch-str &optional φreplace-str )
+(defun xah-find--print-header (@bufferObj @cmd @input-dir @path-regex @search-str &optional @replace-str )
   "Print things"
-  (interactive)
   (princ
    (concat
-    "-*- coding: utf-8 -*-" "\n"
+    "-*- coding: utf-8; mode: xah-find-output -*-" "\n"
     "Datetime: " (xah-find--current-date-time-string) "\n"
-    "Result of: " (symbol-name real-this-command) "\n"
-    (format "Directory ❮%s❯\n" φinput-dir )
-    (format "Path regex ❮%s❯\n" φpath-regex )
-    (format "Search string ❮%s❯\n" φsearch-str )
-    (when φreplace-str
-      (format "Replace string ❮%s❯\n" φreplace-str))
-    xah-find-separator
-    )))
+    "Result of: " @cmd "\n"
+    (format "Directory 「%s」\n" @input-dir )
+    (format "Path regex 「%s」\n" @path-regex )
+    (format "Search string 「%s」\n" @search-str )
+    (when @replace-str (format "Replace string ❬%s❭\n" @replace-str))
+    xah-find-file-separator
+    )
+   @bufferObj))
 
-(defun xah-find--print-text-block (φstring9462)
-  "print string9462"
-  (princ (format "\n❮%s❯\n\n" φstring9462)))
+;; (defun xah-find--print-occur-block (@p1 @p2 @buff)
+;;   "print "
+;;   (princ
+;;    (concat
+;;     (buffer-substring-no-properties (max 1 (- @p1 xah-find-context-char-count-before )) @p1 )
+;;     xah-find-occur-prefix
+;;     (buffer-substring-no-properties @p1 @p2 )
+;;     xah-find-occur-postfix
+;;     (buffer-substring-no-properties @p2 (min (point-max) (+ @p2 xah-find-context-char-count-after )))
+;;     "\n"
+;;     xah-find-occur-separator)
+;;    @buff))
 
-(defun xah-find--print-file-count (φfilepath4287 φcount8086)
+(defun xah-find--occur-output (@p1 @p2 @fpath @buff &optional @no-context-string-p @alt-color)
+  "Print result to a output buffer, with text properties (e.g. highlight and link).
+@p1 @p2 are region boundary. Region of current buffer are grabbed. The region typically is the searched text.
+@fpath is file path to be used as property value for clickable link.
+@buff is the buffer to insert @p1 @p2 region.
+@no-context-string-p if true, don't add text before and after the region of interest. Else, `xah-find-context-char-count-before' number of chars are inserted before, and similar for `xah-find-context-char-count-after'.
+@alt-color if true, use a different highlight color face `xah-find-replace-highlight'. Else, use `xah-find-match-highlight'.
+ 2017-04-07"
+  (let (
+        ($begin (max 1 (- @p1 xah-find-context-char-count-before )))
+        ($end (min (point-max) (+ @p2 xah-find-context-char-count-after )))
+        $textBefore
+        $textMiddle
+        $textAfter
+        ($face (if @alt-color
+                   'xah-find-replace-highlight
+                 'xah-find-match-highlight)))
+    (put-text-property @p1 @p2 'face $face)
+    (put-text-property @p1 @p2 'xah-find-fpath @fpath)
+    (put-text-property @p1 @p2 'xah-find-pos @p1)
+    (add-text-properties @p1 @p2 '(mouse-face highlight))
+
+    (setq $textBefore (buffer-substring $begin @p1 ))
+    (setq $textMiddle (buffer-substring @p1 @p2 ))
+    (setq $textAfter (buffer-substring @p2 $end))
+    (with-current-buffer @buff
+      (if @no-context-string-p
+          (insert xah-find-occur-prefix $textMiddle xah-find-occur-postfix "\n" xah-find-occur-separator )
+        (insert $textBefore xah-find-occur-prefix $textMiddle xah-find-occur-postfix $textAfter "\n" xah-find-occur-separator )))))
+
+;; (defun xah-find--print-replace-block (@p1 @p2 @buff)
+;;   "print "
+;;   (princ (concat "❬" (buffer-substring-no-properties @p1 @p2 ) "❭" "\n" xah-find-occur-separator) @buff))
+
+(defun xah-find--print-file-count (@filepath4287 @count8086 @buffObj32)
   "Print file path and count"
-  (princ (format "• %d %s\n" φcount8086 φfilepath4287 )))
+  (princ (format "%d %s%s%s\n%s"
+                 @count8086
+                 xah-find-filepath-prefix
+                 @filepath4287
+                 xah-find-filepath-postfix
+                 xah-find-file-separator)
+         @buffObj32))
 
-(defun xah-find--switch-and-highlight (φbuffer φhi-str &optional φuse-regex-p)
-  "switch to φbuffer and highlight stuff"
-  (interactive)
-  (progn
-    (switch-to-buffer φbuffer)
-    (delete-other-windows)
-    (fundamental-mode)
-    (hi-lock-mode) ; todo: implement my own coloring
-    (buffer-enable-undo)
-    (when (not (string= φhi-str ""))
-      (highlight-phrase
-       (if φuse-regex-p
-           φhi-str
-         (regexp-quote φhi-str))
-       (quote hi-yellow)))
-    (highlight-lines-matching-regexp "^• " (quote hi-pink))))
+;; (defun xah-find--highlight-output (@buffer &optional @search-str @replace-str)
+;;   "switch to @buffer and highlight stuff"
+;;   (let (($search (concat xah-find-occur-prefix @search-str xah-find-occur-postfix))
+;;         ($rep (concat "❬" @replace-str "❭")))
+;;     (switch-to-buffer @buffer)
+;;     (fundamental-mode)
+;;     (progn
+;;       (goto-char 1)
+;;       (while (search-forward-regexp "❨\\([^❩]+?\\)❩" nil "NOERROR")
+;;         (put-text-property
+;;          (match-beginning 0)
+;;          (match-end 0)
+;;          'face (list :background "yellow"))))
+;;     (progn
+;;       (goto-char 1)
+;;       (while (search-forward-regexp "❬\\([^❭]+?\\)❭" nil "NOERROR")
+;;         (put-text-property
+;;          (match-beginning 0)
+;;          (match-end 0)
+;;          'face (list :background "green"))))
+;;     (progn
+;;       (goto-char 1)
+;;       (while (search-forward xah-find-filepath-prefix nil "NOERROR")
+;;         (put-text-property
+;;          (line-beginning-position)
+;;          (line-end-position)
+;;          'face (list :background "pink"))))
+;;     (goto-char 1)
+;;     (search-forward-regexp "━+" nil "NOERROR")
+;;     (use-local-map xah-find-output-mode-map)))
+
+(defun xah-find--switch-to-output (@buffer)
+  "switch to @buffer and highlight stuff"
+  (let ($p3 $p4)
+    (switch-to-buffer @buffer)
+    (progn
+      (goto-char 1)
+      (while (search-forward xah-find-filepath-prefix nil "NOERROR")
+        (setq $p3 (point))
+        (search-forward xah-find-filepath-postfix nil "NOERROR")
+        (setq $p4 (- (point) (length xah-find-filepath-postfix)))
+        (put-text-property $p3 $p4 'xah-find-fpath (buffer-substring-no-properties $p3 $p4))
+        (add-text-properties $p3 $p4 '(mouse-face highlight))
+        (put-text-property (line-beginning-position) (line-end-position) 'face 'xah-find-file-path-highlight)))
+
+    (goto-char 1)
+    (search-forward "━" nil "NOERROR") ; todo, need fix
+    (search-forward xah-find-occur-prefix nil "NOERROR")
+    (xah-find-output-mode)
+    ))
 
 
 
 ;;;###autoload
-(defun xah-find-text (φsearch-str1 φinput-dir φpath-regex φfixed-case-search-p φprintContext-p)
-  "Report files that contain string.
-By default, not case sensitive, and print surrounding text.
-If `universal-argument' is called first, prompt to ask."
+(defun xah-find-count (@search-str @count-expr @count-number @input-dir @path-regex)
+  "Report how many occurrences of a string, of a given dir.
+Similar to `rgrep', but written in pure elisp.
+Result is shown in buffer *xah-find output*.
+Case sensitivity is determined by `case-fold-search'. Call `toggle-case-fold-search' to change.
+\\{xah-find-output-mode-map}"
   (interactive
-   (let (
-         (ξdefault-input
-          (if (use-region-p)
-              (buffer-substring-no-properties (region-beginning) (region-end))
-            (current-word))))
+   (let ( $operator)
      (list
-      (read-string (format "Search string (default %s): " ξdefault-input) nil 'query-replace-history ξdefault-input)
+      (read-string (format "Search string (default %s): " (current-word)) nil 'query-replace-history (current-word))
+      (setq $operator (ido-completing-read "Report on: " '("greater than" "greater or equal to" "equal" "not equal" "less than" "less or equal to" )))
+      (read-string (format "Count %s: "  $operator) "0")
       (ido-read-directory-name "Directory: " default-directory default-directory "MUSTMATCH")
-      (read-from-minibuffer "Path regex: " nil nil nil 'dired-regexp-history)
-      (if current-prefix-arg (y-or-n-p "Fixed case in search?") nil )
-      (if current-prefix-arg (y-or-n-p "Print surrounding Text?") t ))))
-
-  (let (
-        (case-fold-search (not φfixed-case-search-p))
-        (ξcount 0)
-        (ξoutputBuffer "*xah-find output*")
-        ξp1 ; context begin position
-        ξp2 ; context end position
-        )
-
-    (setq φinput-dir (file-name-as-directory φinput-dir)) ; normalize dir path
-
-    (with-output-to-temp-buffer ξoutputBuffer
-      (xah-find--print-header φinput-dir φpath-regex φsearch-str1 )
-      (mapc
-       (lambda (ξpath)
-         (setq ξcount 0)
+      (read-from-minibuffer "File path regex: " (xah-find--get-default-file-extension-regex "el") nil nil 'dired-regexp-history))))
+  (let* (($outBufName "*xah-find output*")
+         $outBuffer
+         ($countOperator
+          (cond
+           ((string-equal "less than" @count-expr ) '<)
+           ((string-equal "less or equal to" @count-expr ) '<=)
+           ((string-equal "greater than" @count-expr ) '>)
+           ((string-equal "greater or equal to" @count-expr ) '>=)
+           ((string-equal "equal" @count-expr ) '=)
+           ((string-equal "not equal" @count-expr ) '/=)
+           (t (error "count expression 「%s」 is wrong!" @count-expr ))))
+         ($countNumber (string-to-number @count-number)))
+    (when (get-buffer $outBufName) (kill-buffer $outBufName))
+    (setq $outBuffer (generate-new-buffer $outBufName))
+    (xah-find--print-header $outBuffer "xah-find-count" @input-dir @path-regex @search-str )
+    (mapc
+     (lambda ($f)
+       (let (($count 0))
          (with-temp-buffer
-           (insert-file-contents ξpath)
-           (while (search-forward φsearch-str1 nil "NOERROR")
-             (setq ξcount (1+ ξcount))
-             (setq ξp1 (max 1 (- (match-beginning 0) xah-find-print-before )))
-             (setq ξp2 (min (point-max) (+ (match-end 0) xah-find-print-after )))
-             (when φprintContext-p (xah-find--print-text-block (buffer-substring-no-properties ξp1 ξp2 ))))
-           (when (> ξcount 0)
-             (xah-find--print-file-count ξpath ξcount))))
+           (insert-file-contents $f)
+           (goto-char 1)
+           (while (search-forward @search-str nil "NOERROR") (setq $count (1+ $count)))
+           (when (funcall $countOperator $count $countNumber)
+             (xah-find--print-file-count $f $count $outBuffer)))))
+     (xah-find--filter-list (lambda (x) (not (xah-find--ignore-dir-p x))) (find-lisp-find-files @input-dir @path-regex)))
+    (xah-find--switch-to-output $outBuffer)))
 
-       (xah-find--filter-list
-        (lambda (x)
-          (not (xah-find--ignore-dir-p x)))
-        (find-lisp-find-files φinput-dir φpath-regex)))
-
-      (xah-find--switch-and-highlight ξoutputBuffer φsearch-str1))))
+(defun xah-find--get-default-file-extension-regex (&optional @default-ext)
+  "Returns a string, that is a regex to match a file extension.
+The result is based on current buffer's file extension.
+If current file doesn't have extension or current buffer isn't a file, then extension @default-ext is used.
+@default-ext should be a string, without dot, such as 「\"el\"」.
+If @default-ext is nil, 「\"el\"」 is used.
+Example return value: 「ββ.htmlββ'」, where β is a backslash.
+"
+  (let (
+        ($buff-is-file-p (buffer-file-name))
+        $fname-ext
+        $default-ext
+        )
+    (setq $default-ext (if (null @default-ext)
+                           (progn "el")
+                         (progn @default-ext)))
+    (if $buff-is-file-p
+        (progn
+          (setq $fname-ext (file-name-extension (buffer-file-name)))
+          (if (or (null $fname-ext) (equal $fname-ext ""))
+              (progn (concat "\\." $default-ext "\\'"))
+            (progn (concat "\\." $fname-ext "\\'"))))
+      (progn (concat "\\." $default-ext "\\'")))))
 
 ;;;###autoload
-(defun xah-find-text-regex (φsearch-regex φinput-dir φpath-regex φfixed-case-search-p φprint-context-level )
-  "Report files that contain a string pattern, similar to unix grep."
+(defun xah-find-text (@search-str1 @input-dir @path-regex @fixed-case-search-p @printContext-p)
+  "Report files that contain string.
+By default, not case sensitive, and print surrounding text.
+If `universal-argument' is called first, prompt to ask.
+Result is shown in buffer *xah-find output*.
+\\{xah-find-output-mode-map}"
+  (interactive
+   (let (($default-input (if (use-region-p) (buffer-substring-no-properties (region-beginning) (region-end)) (current-word))))
+     (list
+      (read-string (format "Search string (default %s): " $default-input) nil 'query-replace-history $default-input)
+      (ido-read-directory-name "Directory: " default-directory default-directory "MUSTMATCH")
+      (read-from-minibuffer "File path regex: " (xah-find--get-default-file-extension-regex "el") nil nil 'dired-regexp-history)
+      (if current-prefix-arg (y-or-n-p "Fixed case in search?") nil )
+      (if current-prefix-arg (y-or-n-p "Print surrounding Text?") t ))))
+  (let* ((case-fold-search (not @fixed-case-search-p))
+         ($count 0)
+         ($outBufName "*xah-find output*")
+         $outBuffer
+         )
+    (setq @input-dir (file-name-as-directory @input-dir)) ; normalize dir path
+    (when (get-buffer $outBufName) (kill-buffer $outBufName))
+    (setq $outBuffer (generate-new-buffer $outBufName))
+    (xah-find--print-header $outBuffer "xah-find-text" @input-dir @path-regex @search-str1  )
+    (mapc
+     (lambda ($path)
+       (setq $count 0)
+       (with-temp-buffer
+         (insert-file-contents $path)
+         (while (search-forward @search-str1 nil "NOERROR")
+           (setq $count (1+ $count))
+           (when @printContext-p (xah-find--occur-output (match-beginning 0) (match-end 0) $path $outBuffer)))
+         (when (> $count 0) (xah-find--print-file-count $path $count $outBuffer))))
+     (xah-find--filter-list (lambda (x) (not (xah-find--ignore-dir-p x))) (find-lisp-find-files @input-dir @path-regex)))
+    (xah-find--switch-to-output $outBuffer)))
+
+;;;###autoload
+(defun xah-find-replace-text (@search-str @replace-str @input-dir @path-regex @write-to-file-p @fixed-case-search-p @fixed-case-replace-p &optional @backup-p)
+  "Find/Replace string in all files of a directory.
+Search string can span multiple lines.
+No regex.
+
+Backup, if requested, backup filenames has suffix with timestamp, like this: ~xf20150531T233826~
+
+Result is shown in buffer *xah-find output*.
+\\{xah-find-output-mode-map}"
+  (interactive
+   (let ( x-search-str x-replace-str x-input-dir x-path-regex x-write-to-file-p x-fixed-case-search-p x-fixed-case-replace-p x-backup-p )
+     (setq x-search-str (read-string (format "Search string (default %s): " (current-word)) nil 'query-replace-history (current-word)))
+     (setq x-replace-str (read-string (format "Replace string: ") nil 'query-replace-history))
+     (setq x-input-dir (ido-read-directory-name "Directory: " default-directory default-directory "MUSTMATCH"))
+     (setq x-path-regex (read-from-minibuffer "File path regex: " (xah-find--get-default-file-extension-regex "el") nil nil 'dired-regexp-history))
+     (setq x-write-to-file-p (y-or-n-p "Write changes to file?"))
+     (setq x-fixed-case-search-p (y-or-n-p "Fixed case in search?"))
+     (setq x-fixed-case-replace-p (y-or-n-p "Fixed case in replacement?"))
+     (if x-write-to-file-p
+         (setq x-backup-p (y-or-n-p "Make backup?"))
+       (setq x-backup-p nil))
+     (list x-search-str x-replace-str x-input-dir x-path-regex x-write-to-file-p x-fixed-case-search-p x-fixed-case-replace-p x-backup-p )))
+  (let (($outBufName "*xah-find output*")
+        $outBuffer
+        ($backupSuffix (xah-find--backup-suffix "xf")))
+    (when (get-buffer $outBufName) (kill-buffer $outBufName))
+    (setq $outBuffer (generate-new-buffer $outBufName))
+    (xah-find--print-header $outBuffer "xah-find-replace-text" @input-dir @path-regex @search-str @replace-str )
+    (mapc
+     (lambda ($f)
+       (let ((case-fold-search (not @fixed-case-search-p))
+             ($count 0))
+         (with-temp-buffer
+           (insert-file-contents $f)
+           (while (search-forward @search-str nil t)
+             (setq $count (1+ $count))
+             (replace-match @replace-str @fixed-case-replace-p "literalreplace")
+             (xah-find--occur-output (match-beginning 0) (point) $f $outBuffer))
+           (when (> $count 0)
+             (when @write-to-file-p
+               (when @backup-p (copy-file $f (concat $f $backupSuffix) t))
+               (write-region 1 (point-max) $f))
+             (xah-find--print-file-count $f $count $outBuffer )))))
+     (xah-find--filter-list (lambda (x) (not (xah-find--ignore-dir-p x))) (find-lisp-find-files @input-dir @path-regex)))
+    (xah-find--switch-to-output $outBuffer)))
+
+;;;###autoload
+(defun xah-find-text-regex (@search-regex @input-dir @path-regex @fixed-case-search-p @print-context-level )
+  "Report files that contain a string pattern, similar to `rgrep'.
+Result is shown in buffer *xah-find output*.
+\\{xah-find-output-mode-map}
+Version 2016-12-21"
   (interactive
    (list
     (read-string (format "Search regex (default %s): " (current-word)) nil 'query-replace-history (current-word))
     (ido-read-directory-name "Directory: " default-directory default-directory "MUSTMATCH")
-    (read-from-minibuffer "Path regex: " nil nil nil 'dired-regexp-history)
+    (read-from-minibuffer "File path regex: " (xah-find--get-default-file-extension-regex "el") nil nil 'dired-regexp-history)
     (y-or-n-p "Fixed case search?")
-    (ido-completing-read "Print context level (0=none, 1=matched pattern, 2=neighboring string) " '("0" "1" "2"))))
-
-  (let (
-        (ξcount 0)
-        (ξoutputBuffer "*xah-find output*")
-        (ξpos1 1) ; beginning of line
-        (ξpos2 1))
-
-    (setq φinput-dir (file-name-as-directory φinput-dir)) ; add ending slash
-
-    (with-output-to-temp-buffer ξoutputBuffer
-      (princ (format "-*- coding: utf-8 -*-
-%s
-xah-find-text-regex result.
-Search regex 「%s」
-Directory 「%s」
-Path Regex 「%s」
-
-" (xah-find--current-date-time-string) φsearch-regex φinput-dir φpath-regex))
-      (mapc
-       (lambda (ξfp)
-         (setq ξcount 0)
-         (with-temp-buffer
-           (insert-file-contents ξfp)
-           (setq case-fold-search (not φfixed-case-search-p))
-           (while (search-forward-regexp φsearch-regex nil t)
-             (setq ξcount (1+ ξcount))
-             (cond
-              ((equal φprint-context-level "0") nil)
-              ((equal φprint-context-level "1") (xah-find--print-text-block (match-string 0)))
-              ((equal φprint-context-level "2")
-               (progn
-                 (setq ξpos1 (max 1 (- (match-beginning 0) xah-find-print-before )))
-                 (setq ξpos2 (min (point-max) (+ (match-end 0) xah-find-print-after )))
-                 (xah-find--print-text-block (buffer-substring-no-properties ξpos1 ξpos2 ))))))
-           (when (> ξcount 0)
-             (xah-find--print-file-count ξfp ξcount))))
-       (xah-find--filter-list
-        (lambda (x)
-          (not (xah-find--ignore-dir-p x)))
-        (find-lisp-find-files φinput-dir φpath-regex)))
-
-      (xah-find--switch-and-highlight ξoutputBuffer φsearch-regex t))))
+    (ido-completing-read "Print context level: " '("with context string" "just matched pattern" "none" ))))
+  (let (($count 0)
+        ($outBufName "*xah-find output*")
+        $outBuffer
+        )
+    (setq @input-dir (file-name-as-directory @input-dir)) ; add ending slash
+    (when (get-buffer $outBufName) (kill-buffer $outBufName))
+    (setq $outBuffer (generate-new-buffer $outBufName))
+    (xah-find--print-header $outBuffer "xah-find-text-regex" @input-dir @path-regex @search-regex  )
+    (mapc
+     (lambda ($fp)
+       (setq $count 0)
+       (with-temp-buffer
+         (insert-file-contents $fp)
+         (setq case-fold-search (not @fixed-case-search-p))
+         (while (search-forward-regexp @search-regex nil t)
+           (setq $count (1+ $count))
+           (cond
+            ((equal @print-context-level "none") nil)
+            ((equal @print-context-level "just matched pattern")
+             (xah-find--occur-output (match-beginning 0) (match-end 0) $fp $outBuffer t))
+            ((equal @print-context-level "with context string")
+             (xah-find--occur-output (match-beginning 0) (match-end 0) $fp $outBuffer))))
+         (when (> $count 0) (xah-find--print-file-count $fp $count $outBuffer))))
+     (xah-find--filter-list (lambda (x) (not (xah-find--ignore-dir-p x))) (find-lisp-find-files @input-dir @path-regex)))
+    (xah-find--switch-to-output $outBuffer)))
 
 ;;;###autoload
-(defun xah-find-replace-text (φsearch-str φreplace-str φinput-dir φpath-regex φwrite-to-file-p φfixed-case-search-p φfixed-case-replace-p &optional φbackup-p)
-  "Find/Replace string in all files of a directory.
-Search string can span multiple lines.
-No regex."
-  (interactive
-   (list
-    (read-string (format "Search string (default %s): " (current-word)) nil 'query-replace-history (current-word))
-    (read-string (format "Replace string: ") nil 'query-replace-history)
-    (ido-read-directory-name "Directory: " default-directory default-directory "MUSTMATCH")
-    (read-from-minibuffer "Path regex: " nil nil nil 'dired-regexp-history)
-    (y-or-n-p "Write changes to file?")
-    (y-or-n-p "Fixed case in search?")
-    (y-or-n-p "Fixed case in replacement?")
-    (y-or-n-p "Make backup?")))
-
-  (let (
-        (ξoutputBuffer "*xah-find output*")
-        (ξbackupSuffix (xah-find--backup-suffix "xfrt")))
-
-    (with-output-to-temp-buffer ξoutputBuffer
-     (xah-find--print-header φinput-dir φpath-regex φsearch-str φreplace-str )
-     (mapc
-      (lambda (ξf)
-        (let ( (case-fold-search (not φfixed-case-search-p))
-               (ξcount 0))
-          (with-temp-buffer
-            (insert-file-contents ξf)
-            (while (search-forward φsearch-str nil t)
-              (replace-match φreplace-str φfixed-case-replace-p "literalreplace")
-              (setq ξcount (1+ ξcount))
-              (xah-find--print-text-block
-               (buffer-substring-no-properties
-                (max 1 (- (match-beginning 0) xah-find-print-before ))
-                (min (point-max) (+ (point) xah-find-print-after )))))
-
-            (when (> ξcount 0)
-              (when φwrite-to-file-p
-                (when φbackup-p (copy-file ξf (concat ξf ξbackupSuffix) t))
-                (write-region 1 (point-max) ξf))
-              (xah-find--print-file-count ξf ξcount )))))
-      (xah-find--filter-list
-       (lambda (x)
-         (not (xah-find--ignore-dir-p x)))
-       (find-lisp-find-files φinput-dir φpath-regex)))
-     (princ "Done"))
-
-    (xah-find--switch-and-highlight ξoutputBuffer φreplace-str)))
-
-;;;###autoload
-(defun xah-find-replace-text-regex (φregex φreplace-str φinput-dir φpath-regex φwrite-to-file-p φfixed-case-search-p φfixed-case-replace-p)
+(defun xah-find-replace-text-regex (@regex @replace-str @input-dir @path-regex @write-to-file-p @fixed-case-search-p @fixed-case-replace-p)
   "Find/Replace by regex in all files of a directory.
 
-φregex is a regex pattern.
-φreplace-str is replacement string.
-φinput-dir is input directory to search (includes all nested subdirectories).
-φpath-regex is a regex to filter file paths.
-φwrite-to-file-p, when true, write to file, else, print a report of changes only.
-φfixed-case-search-p sets `case-fold-search' for this operation.
-φfixed-case-replace-p, if true, then the letter-case in replacement is literal. (this is relevant only if φfixed-case-search-p is true.)
-"
+Backup, if requested, backup filenames has suffix with timestamp, like this: ~xf20150531T233826~
+
+When called in lisp code:
+@REGEX is a regex pattern.
+@REPLACE-STR is replacement string.
+@INPUT-DIR is input directory to search (includes all nested subdirectories).
+@PATH-REGEX is a regex to filter file paths.
+@WRITE-TO-FILE-P, when true, write to file, else, print a report of changes only.
+@FIXED-CASE-SEARCH-P sets `case-fold-search' for this operation.
+@FIXED-CASE-REPLACE-P if true, then the letter-case in replacement is literal. (this is relevant only if @FIXED-CASE-SEARCH-P is true.)
+Result is shown in buffer *xah-find output*.
+\\{xah-find-output-mode-map}"
   (interactive
    (list
-    (read-regexp "regex: " )
+    (read-regexp "Find regex: " )
     (read-string (format "Replace string: ") nil 'query-replace-history)
     (ido-read-directory-name "Directory: " default-directory default-directory "MUSTMATCH")
-    (read-from-minibuffer "Path regex: " nil nil nil 'dired-regexp-history)
+    (read-from-minibuffer "File path regex: " (xah-find--get-default-file-extension-regex "el") nil nil 'dired-regexp-history)
     (y-or-n-p "Write changes to file?")
     (y-or-n-p "Fixed case in search?")
     (y-or-n-p "Fixed case in replacement?")))
-
-  (let (
-        (ξoutputBuffer "*xah-find output*")
-        (ξbackupSuffix (xah-find--backup-suffix "xfrtr")))
-    (with-output-to-temp-buffer ξoutputBuffer
-      (xah-find--print-header φinput-dir φpath-regex φregex φreplace-str )
-      (mapc
-       (lambda (ξfp)
-         (let (
-               (ξcount 0)
-               ξmatchStrFound ξmatchStrReplaced )
-
-           (with-temp-buffer
-             (insert-file-contents ξfp)
-             (setq case-fold-search (not φfixed-case-search-p))
-             (while (re-search-forward φregex nil t)
-               (setq ξmatchStrFound (match-string 0))
-               (replace-match φreplace-str φfixed-case-replace-p)
-               (setq ξmatchStrReplaced (match-string 0))
-               (setq ξcount (1+ ξcount))
-               (princ (format "「%s」\n" ξmatchStrFound))
-               (princ (format "『%s』\n" ξmatchStrReplaced)))
-
-             (when (> ξcount 0)
-               (when φwrite-to-file-p
-                 (copy-file ξfp (concat ξfp ξbackupSuffix) t)
-                 (write-region 1 (point-max) ξfp))
-               (princ (format "• %d %s\n" ξcount ξfp))))))
-       (xah-find--filter-list
-        (lambda (x)
-          (not (xah-find--ignore-dir-p x)))
-        (find-lisp-find-files φinput-dir φpath-regex)))
-      (princ "Done"))
-
-    (xah-find--switch-and-highlight ξoutputBuffer φreplace-str)
-
-    ;; (progn
-    ;;   (when (not (string= φreplace-str ""))
-    ;;     (highlight-phrase (regexp-quote φregex) (quote hi-yellow)))
-    ;;   )
-
-    ))
-
-;;;###autoload
-(defun xah-find-count (φsearch-str φcount-expr φcount-number φinput-dir φpath-regex)
-  "Report how many occurances of a string, of a given dir.
-Similar to grep, written in elisp.
-
-Case sensitivity is determined by `case-fold-search'. Call `toggle-case-fold-search' to change."
-  (interactive
-   (let* ( ξoperator)
-     (list
-      (read-string (format "Search string (default %s): " (current-word)) nil 'query-replace-history (current-word))
-      (setq ξoperator
-            (ido-completing-read
-             "Report on:"
-             '("greater than" "greater or equal to" "equal" "not equal" "less than" "less or equal to" )))
-      (read-string (format "Count %s: "  ξoperator) "0")
-      (ido-read-directory-name "Directory: " default-directory default-directory "MUSTMATCH")
-      (read-from-minibuffer "Path regex: " nil nil nil 'dired-regexp-history))))
-
-  (let* (
-         (ξoutputBuffer "*xah-find output*")
-         (ξcountOperator
-          (cond
-
-           ((string-equal "less than" φcount-expr ) '<)
-           ((string-equal "less or equal to" φcount-expr ) '<=)
-           ((string-equal "greater than" φcount-expr ) '>)
-           ((string-equal "greater or equal to" φcount-expr ) '>=)
-           ((string-equal "equal" φcount-expr ) '=)
-           ((string-equal "not equal" φcount-expr ) '/=)
-           (t (error "your count expression 「%s」 is wrong!" φcount-expr ))))
-         (ξcountNumber (string-to-number φcount-number)))
-
-    (with-output-to-temp-buffer ξoutputBuffer
-      (princ (format "-*- coding: utf-8 -*-
-Date: %s
-Command “xah-find-count” result.
-Search string: 「%s」
-Count expression: 「%s %s」
-Input dir: 「%s」
-Path regex: 「%s」
-"
-                     (xah-find--current-date-time-string) φsearch-str φcount-expr φcount-number φinput-dir φpath-regex))
-      (mapc
-       (lambda (ξf)
-         (let ((ξcount 0))
-           (with-temp-buffer
-             (insert-file-contents ξf)
-             (goto-char 1)
-             (while (search-forward φsearch-str nil "NOERROR if not found")
-               ;; (princ (format "「%s」\n" (buffer-substring-no-properties (line-beginning-position) (line-end-position) )))
-               (setq ξcount (1+ ξcount)))
-
-             ;; report if the occurance is not n times
-             (when
-                 (funcall ξcountOperator ξcount ξcountNumber)
-               (princ (format "• %d %s\n" ξcount ξf))))))
-       (xah-find--filter-list
-        (lambda (x)
-          (not (xah-find--ignore-dir-p x)))
-        (find-lisp-find-files φinput-dir φpath-regex)))
-      (princ "Done"))
-
-    (xah-find--switch-and-highlight ξoutputBuffer φsearch-str)))
+  (let (($outBufName "*xah-find output*")
+        $outBuffer
+        ($backupSuffix (xah-find--backup-suffix "xfr")))
+    (when (get-buffer $outBufName) (kill-buffer $outBufName))
+    (setq $outBuffer (generate-new-buffer $outBufName))
+    (xah-find--print-header $outBuffer "xah-find-replace-text-regex" @input-dir @path-regex @regex @replace-str )
+    (mapc
+     (lambda ($fp)
+       (let (($count 0))
+         (with-temp-buffer
+           (insert-file-contents $fp)
+           (setq case-fold-search (not @fixed-case-search-p))
+           (while (re-search-forward @regex nil t)
+             (setq $count (1+ $count))
+             ;; (xah-find--print-occur-block (match-beginning 0) (match-end 0) $outBuffer)
+             (xah-find--occur-output (match-beginning 0) (match-end 0) $fp $outBuffer t)
+             (replace-match @replace-str @fixed-case-replace-p)
+             (xah-find--occur-output (match-beginning 0) (point) $fp $outBuffer nil t))
+           (when (> $count 0)
+             (xah-find--print-file-count $fp $count $outBuffer)
+             (when @write-to-file-p (copy-file $fp (concat $fp $backupSuffix) t) (write-region 1 (point-max) $fp))))))
+     (xah-find--filter-list (lambda (x) (not (xah-find--ignore-dir-p x))) (find-lisp-find-files @input-dir @path-regex)))
+    (xah-find--switch-to-output $outBuffer)))
 
 (provide 'xah-find)
 

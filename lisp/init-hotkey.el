@@ -12,6 +12,9 @@
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase) ; 鼠标滚轮向上 放大字体
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) ; 鼠标滚轮向下 缩小字体
 (global-set-key (kbd "<f7>") 'one-key-push)	; F7 一键push
+(global-set-key (kbd "C-S-f") 'helm-projectile-find-file)
+(global-unset-key (kbd "<C-down-mouse-1>"))
+(global-set-key (kbd "<C-mouse-1>") 'helm-projectile-find-file-dwin)
 
 (defun open-emacs-config()
 	"open emacs config file for user edit"
