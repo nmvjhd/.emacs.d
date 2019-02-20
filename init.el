@@ -69,6 +69,7 @@ occurence of CHAR."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-export-backends (quote (ascii html latex md)))
  '(package-selected-packages
    (quote
 	(swiper-helm which-key helm-projectile projectile neotree find-file-in-project helm pandoc-mode markdown-mode+ markdown-mode auctex leuven-theme nodejs-repl xref-js2 graphviz-dot-mode js2-mode))))

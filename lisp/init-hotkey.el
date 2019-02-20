@@ -2,9 +2,9 @@
 
 (global-set-key (kbd "<f1>") 'open-emacs-config) ; F1 打开init.el
 (global-set-key (kbd "<f4>") 'close-current-buffer)	; F4 关闭当前buffer
+(global-set-key (kbd "<f5>") 'new-temp-buffer) ; F5 创建新的临时buffer
 (global-set-key (kbd "<f7>") 'one-key-push)	; F7 一键push
 (global-set-key (kbd "<f8>") 'neotree-toggle) ; F8 开关neotree
-(global-set-key (kbd "<f9>") 'insert-arrow)	; F9 插入箭头
 (global-set-key (kbd "<f10>") 'eval-last-sexp) ; F10 执行光标前的S表达式
 (global-set-key (kbd "<f11>") 'org2md)	; F11 org文档转换为markdown文档
 (global-set-key (kbd "<C-f11>") 'md2org) ; Ctrl+F11 markdown文档转换为org文档
@@ -49,10 +49,15 @@
  (move-line-up)
  (next-line))
 
-(defun insert-arrow()
-  ;;insert arrow at current point
+(defun insert-arrow ()
+  "insert arrow at current point"
   (interactive)
   (insert-string " --> "))
+
+(defun insert-bdarrow ()
+  "insert a two way arrow"
+  (interactive)
+  (insert-string " <==> "))
 
 (defun org2md()
   "convert current org-mode format document to markdown format"
@@ -96,5 +101,33 @@
 	  (call-process "git" nil output-buffer nil "commit" "-m" (read-from-minibuffer "commit message: "))
 	  (call-process "git" nil output-buffer nil "push")
 	  (switch-to-buffer output-buffer))))
+
+(defvar buffer-mode-alist
+  '(("java"   . java-mode)  
+    ("c++"    . c++-mode)  
+    ("perl"   . perl-mode)  
+    ("python" . python-mode)  
+    ("js"     . javascript-mode)  
+    ("j"      . j-mode)  
+    ("tcl"    . tcl-mode))  
+  "生成草稿buffer的简短mode名称列表")
+
+(defun new-temp-buffer ()
+  "create a temp buffer, like a scratch"
+  (interactive)  
+  (let ((mode (ido-completing-read  
+               "What kind of buffer mode ?:"  
+               (append (all-completions ""  
+                                        obarray  
+                                        (lambda (s)   
+                                          (and (fboundp s)  
+                                               (string-match "-mode$" (symbol-name s)))))  
+                       (mapcar 'car buffer-mode-alist)))))  
+    (pop-to-buffer (get-buffer-create (format "* scratch * %s *" mode)))  
+    (funcall (if (assoc mode buffer-mode-alist)  
+                 (cdr (assoc mode buffer-mode-alist))  
+               (intern mode)))
+	(delete-other-windows)
+	))
 
 (provide 'init-hotkey)
